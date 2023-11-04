@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Column Selector Tool</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/style/column_chooser.css">
+    </head>
+
+    <body>
+        <h1>Column selector tool</h1>
+        <h2>This tool allows you give you choices of columns to use depending on bed height or volume of resin</h2>
+
+        <div class="description">
+            <ul>
+                <li>In the selection box below, tick one of the boxes for volume or bed height modes</li>
+                <li>In volume mode, the tool will take your volume of resin and work out the bed height for all the
+                    columns</li>
+                <li>In bed height mode, the tool will work out the volume of resin for each column</li>
+                <li>Unsuitable columns will be grayed out</li>
+                <li>Click on a column image to open it up and get a tool to fine tune your parameters</li>
+            </ul>
+            <!-- <p>In the selection box below, tick one of the boxes for volume or bed height modes</p>
+            <p>In volume mode, the tool will take your volume of resin and work out the bed height for all the columns
+            </p>
+            <p>In bed height mode, the tool will work out the volume of resin for each column</p>
+            <p>Unsuitable columns will be grayed out</p>
+            <p>Click on a column image to open it up and get a tool to fine tune your parameters</p> -->
+        </div>
+
+
+        <div class="mode-selection">
+            <h3>Choose which mode you need and input your volume into the box</h3>
+            <div class="selection-section">
+                <div class="volume-selection-section selector-div">
+                    <div class="label-input">
+                        <input type="radio" name="mode" id="volume-mode">
+                        <label for="volume-mode">Use resin volume mode (mL)</label>
+                    </div>
+                    <input type="number" name="resin-volume" id="resin-volume" class="number-input">
+                </div>
+                <div class="bedh-selection-section selector-div">
+                    <div class="label-input">
+                        <input type="radio" name="mode" id="bedh-mode">
+                        <label for="bedh-mode">Use bed height mode (cm)</label>
+                    </div>
+                    <input type="number" name="bed-height" id="bedh-height" class="number-input">
+                </div>
+                <div class="button-section selector-div">
+                    <button id="reset-button" class="mode-button">Reset</button>
+                    <button id="calculate-button" class="mode-button">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns-section">
+            <div class="column-card" id="hiscale_16_20">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                    <p class="calculated-volume">Calculated Volume (mL): <span></span></p>
+                    <p class="calcuated-height">Calculated Height (cm): <span></span></p>
+
+                </div>
+            </div>
+
+            <div class="column-card" id="test">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                </div>
+            </div>
+            <div class="column-card">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                </div>
+            </div>
+            <div class="column-card">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                </div>
+            </div>
+            <div class="column-card">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                </div>
+            </div>
+            <div class="column-card">
+                <div class="column-header">
+                    <p class="column-title">HiScale</p>
+                </div>
+
+                <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
+                <div class="column-stats">
+                    <p class="radius">Radius (mm): <span></span></p>
+                    <p class="diameter">Diameter (mm): <span></span></p>
+                    <p class="max-vol">Max Volume (mL): <span></span></p>
+                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+        <script src="assets/js/column_chooser.js"></script>
+    </body>
+
+</html>
