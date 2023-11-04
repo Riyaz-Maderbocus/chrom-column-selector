@@ -19,6 +19,17 @@ class Column {
 
 const col1 = new Column("abc", "abc", "abc", 25, 250, 12);
 
+// let arraytest = [ one = 1,2,3]
+const myArray = [
+
+    new Column("abc", "abc", "abc", 25, 250, 12),
+    new Column("def", "def", "def", 25, 250, 12),
+]
+
+
+for (let c of myArray) {
+    console.log(c.id)
+}
 
 const omnifit = {
     radius: null,

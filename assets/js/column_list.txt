@@ -1,4 +1,6 @@
-Adapter XK26
+constructor(html_id, name, img_src, inner diameter (mm), minVol, maxVol, minHeight, maxHeight)
+
+Adapter XK26 (adaptor don't do)
 axichrom 100/300
 axichrom 100/500
 axiChrom 140/300
@@ -6,7 +8,7 @@ axiCrhom 200/300
 Axicrhom 70/300
 BPG 140/950
 GE RK 16/26
-GE XK 16/100
+GE XK 16/100 (16mm,  68 )
 GE XK 16/70
 GE XK 26
 GE XK 26/40
