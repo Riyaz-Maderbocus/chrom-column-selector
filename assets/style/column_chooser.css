@@ -6,6 +6,21 @@
     --standard-width: 1080px;
 }
 
+
+/* utility classes */
+
+.green-text {
+    color: green;
+}
+
+.red-text {
+    color: red;
+}
+
+.greyed-out {
+    opacity: 0.5;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -122,6 +137,10 @@ h2 {
     /* min-height: 600px; */
 }
 
+.columns-section .column-card:hover {
+    cursor: pointer;
+}
+
 .columns-section .column-card .column-header {
     background-color: var(--primary-color);
     border-top-right-radius: 6px;
@@ -141,20 +160,52 @@ h2 {
 
 }
 
-.columns-section .column-card .column-img {
+.columns-section .column-card .img-div {
+    height: 250px;
+}
+
+.columns-section .column-card .img-div .column-img {
     margin: 0 auto;
     padding: 0 10%;
-    width: 100%;
+    max-width: 100%;
     /* text-align: center; */
     display: block;
-    max-height: 250px;
+    max-height: 100%;
 }
 
 .columns-section .column-card .column-stats {
     padding: 0.75rem;
 }
 
+.columns-section .column-card .column-stats .stats-p {
+    position: relative;
+}
+
+.columns-section .column-card .column-stats .stats-p span {
+    position: absolute;
+    right: 1px;
+}
+
 /* single column selector */
 .columns-section .column-card .single-column-selection {
     display: none;
+}
+
+
+
+/* Media queries */
+
+
+@media only screen and (max-width: 550px) {
+
+    /* Calc section */
+    .mode-selection .selection-section .volume-selection-section.selector-div,
+    .mode-selection .selection-section .bedh-selection-section.selector-div {
+        flex-direction: column;
+    }
+
+    .mode-selection .selection-section .volume-selection-section.selector-div input[type="number"],
+    .mode-selection .selection-section .bedh-selection-section.selector-div input[type="number"] {
+        margin: 0.5rem 0;
+    }
 }
