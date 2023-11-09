@@ -39,34 +39,6 @@ const all_columns = [
 
 ];
 
-
-
-// const omnifit = {
-//     radius: null,
-
-//     maxVolume: null,
-//     maxHeight: null,
-//     calculatedVolume: null,
-//     caluatedHeight: null
-
-
-
-// }
-// const hiScale_16_20 = {
-//     card: document.querySelector("#hiscale_16_20"),
-//     id: "#hiscale_16_20",
-//     colName: "HiScale 16/20",
-//     radius: null,
-//     diameter: 16,
-//     maxVolume: 40,
-//     minHeight: 0,
-//     maxHeight: 20,
-//     calculatedVolume: null,
-//     caluatedHeight: null,
-
-
-// }
-
 const columnsSection = document.querySelector(".columns-section");
 
 for (let col of all_columns) {
@@ -160,7 +132,7 @@ for (let col of all_columns) {
     // Caculated height
     let calcHeightP = document.createElement("p");
     calcHeightP.classList.add("stats-p", "calculated-height");
-    calcHeightP.innerText = "Calculated Vol (mL): ";
+    calcHeightP.innerText = "Calculated Height (cm): ";
     let calcHeightSpan = document.createElement("span");
     calcHeightSpan.innerText = `${col.caluatedHeight}`;
     calcHeightP.append(calcHeightSpan);
@@ -178,9 +150,234 @@ for (let col of all_columns) {
 
 const test = document.querySelector("#test");
 
+// Radio buttons
+const volMode = document.querySelector("#volume-mode");
+const heightMode = document.querySelector("#bedh-mode");
+
+// user inputs
+const volInput = document.querySelector("#resin-volume");
+const heightInput = document.querySelector("#bedh-height");
+
+// Buttons
+const calcButton = document.querySelector("#calculate-button");
+const resetButton = document.querySelector("#reset-button");
+
+// Settings
+let hasCalculatedAlready = false;
+
+
+// This works currently
+// calcButton.addEventListener("click", () => {
+//     // alert("I got clicked");
+//     let userVol = parseFloat(volInput.value);
+//     let userHeight = parseFloat(heightInput.value);
+
+//     if (checkMode() === "volMode") {
+//         // alert("volmode")
+//         if (userVol === NaN || !userVol) {
+//             alert("Please enter a value in resin volume field");
+//         } else {
+//             for (let col of all_columns) {
+//                 let newArea = (col.diameter / 20) ** 2 * Math.PI;
+
+//                 // let newHeight = (userVol / newArea).toFixed(2);
+//                 let newHeight = calculateHeight(userVol, newArea).toFixed(2);
+//                 col.calculatedVolume = userVol;
+//                 let volSpan = document.querySelector(`#${col.id} .calculated-volume span`);
+//                 volSpan.innerText = userVol;
+//                 let heightSpan = document.querySelector(`#${col.id} .calculated-height span`);
+//                 heightSpan.innerText = newHeight;
+//             }
+//         }
+//     } else {
+//         alert("height mode")
+//     }
+
+// })
 
 
 
+
+calcButton.addEventListener("click", () => {
+    // alert("I got clicked");
+    let userVol = parseFloat(volInput.value);
+    let userHeight = parseFloat(heightInput.value);
+
+    if (checkMode() === "volMode") {
+        // alert("volmode")
+        if (userVol === NaN || !userVol) {
+            alert("Please enter a value in resin volume field");
+        } else {
+            for (let col of all_columns) {
+                // let newArea = (col.diameter / 20) ** 2 * Math.PI;
+
+                let newArea = getArea(col);
+
+                // let newHeight = (userVol / newArea).toFixed(2);
+                // let newHeight = calculateHeight(userVol, newArea).toFixed(2);
+                // col.calculatedVolume = userVol;
+                // let volSpan = document.querySelector(`#${col.id} .calculated-volume span`);
+                // volSpan.innerText = userVol;
+                // let heightSpan = document.querySelector(`#${col.id} .calculated-height span`);
+                // heightSpan.innerText = newHeight;
+                resetFormatting(col);
+                calcHeight(userVol, newArea, col);
+                colorText(col);
+                hasCalculatedAlready = true;
+            }
+        }
+    } else {
+        // alert("height mode");
+        if (userHeight === NaN || !userHeight) {
+            alert("Please enter a value in the bed height field")
+        } else {
+            for (let col of all_columns) {
+
+                let newArea = getArea(col);
+                resetFormatting(col);
+                calcVol(userHeight, newArea, col);
+                colorText(col);
+                hasCalculatedAlready = true;
+            }
+        }
+    }
+
+})
+
+resetButton.addEventListener("click", () => {
+    if (hasCalculatedAlready === true) {
+        for (let col of all_columns) {
+            resetFormatting(col);
+            hardReset(col);
+        }
+        // reset gui
+        volMode.checked = true;
+        volInput.value = "";
+        heightInput.value = "";
+        hasCalculatedAlready = false;
+    } else {
+        volMode.checked = true;
+        volInput.value = "";
+        heightInput.value = "";
+        hasCalculatedAlready = false;
+    }
+
+    // if (hasCalculatedAlready == true) {
+    //     alert("clicked and it set to true")
+    // }
+})
+
+
+// Check to see what mode
+
+
+let checkMode = () => {
+    if (volMode.checked) {
+        return "volMode"
+    } else {
+        return "heightMode"
+    }
+}
+
+// get area from column parameters
+let getArea = (column) => {
+    return (column.diameter / 20) ** 2 * Math.PI;
+}
+// Work out height from volume input
+
+let calcHeight = (volResin, area, column) => {
+    column.calculatedVolume = volResin;
+    let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+    volSpan.innerText = volResin;
+
+    column.calculatedHeight = (volResin / area).toFixed(2);
+    let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+    heightSpan.innerText = column.calculatedHeight;
+    // return volResin / area
+}
+
+// Work out volume from height input
+
+let calcVol = (height, area, column) => {
+    column.calculatedHeight = height;
+    let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+    heightSpan.innerText = height;
+
+    column.calculatedVolume = (height * area).toFixed(2);
+    let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+    volSpan.innerText = column.calculatedVolume;
+}
+
+
+let colorText = (column) => {
+    // height formatting
+    let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+    let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+    let card = document.querySelector(`#${column.id}`);
+
+    if (column.calculatedHeight < column.minHeight || column.calculatedHeight > column.maxHeight) {
+        // let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+        heightSpan.classList.add("red-text");
+        // let card = document.querySelector(`#${column.id}`);
+        // card.classList.add(".greyed-out");
+    } else {
+        // let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+        heightSpan.classList.add("green-text");
+        // let card = document.querySelector(`#${column.id}`);
+        // card.classList.add("greyed-out");
+    }
+
+    // volume fomatting
+
+    if (column.calculatedVolume < column.minVol || column.calculatedVolume > column.maxVol) {
+        // let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+        volSpan.classList.add("red-text");
+        // let card = document.querySelector(`#${column.id}`);
+        // card.classList.add(".greyed-out");
+    } else {
+        // let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+        volSpan.classList.add("green-text");
+    }
+
+    // card formatting
+
+
+    if (volSpan.classList.contains("red-text") || heightSpan.classList.contains("red-text")) {
+        card.classList.add("greyed-out");
+    }
+
+}
+
+// remove formatting of colours and cards
+let resetFormatting = (column) => {
+    let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+    let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+    let card = document.querySelector(`#${column.id}`);
+
+    card.classList.remove("greyed-out");
+    heightSpan.classList.remove("red-text", "green-text");
+    volSpan.classList.remove("red-text", "green-text");
+}
+
+
+// hard reset - return to initial state 
+let hardReset = (column) => {
+
+    // reset column values
+    column.calculatedVolume = "";
+    column.calculatedHeight = "";
+
+    // delete spans
+    let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
+    let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
+    heightSpan.remove();
+    volSpan.remove();
+
+
+
+
+
+}
 // utilities
 
 // Use to get the id of the sub element clicked
@@ -195,9 +392,9 @@ const test = document.querySelector("#test");
 
 
 //  Use this to change the inner text of the spans
-hiScale_16_20.card.querySelector(".diameter span").innerText = hiScale_16_20.diameter;
+// hiScale_16_20.card.querySelector(".diameter span").innerText = hiScale_16_20.diameter;
 
 // Click listener for one card
-hiScale_16_20.card.addEventListener("click", () => {
-    alert("I got clicked first card")
-})
+// hiScale_16_20.card.addEventListener("click", () => {
+//     alert("I got clicked first card")
+// })
