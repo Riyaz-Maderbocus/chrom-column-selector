@@ -34,6 +34,7 @@ body {
     /* display: flex;
     flex-direction: column;
     align-items: center; */
+    /* position: relative; */
 }
 
 h1 {
@@ -111,16 +112,20 @@ h2 {
     background-color: none;
 }
 
-.mode-selection .selection-section .button-section #reset-button {
+.mode-selection .selection-section .button-section #reset-button,
+.column-card .single-column-selection .button-section #single-reset-button {
     background-color: red;
 }
 
-.mode-selection .selection-section .button-section #calculate-button {
+.mode-selection .selection-section .button-section #calculate-button,
+.column-card .single-column-selection .button-section #single-calculate-button {
     background-color: rgb(33, 191, 33);
 }
 
 .mode-selection .selection-section .button-section #reset-button:hover,
-.mode-selection .selection-section .button-section #calculate-button:hover {
+.mode-selection .selection-section .button-section #calculate-button:hover,
+.column-card .single-column-selection .button-section #single-reset-button:hover,
+.column-card .single-column-selection .button-section #single-calculate-button:hover {
     cursor: pointer;
 }
 
@@ -135,6 +140,8 @@ h2 {
     margin: 0 auto;
 }
 
+/* column cards */
+
 .columns-section .column-card {
     border: 2px solid var(--primary-color);
     border-radius: 10px;
@@ -142,6 +149,7 @@ h2 {
     /* padding: 0.5rem 0.75rem; */
     margin: 1rem 0.5rem;
     /* min-height: 600px; */
+    /* position: relative; */
 }
 
 .columns-section .column-card:hover {
@@ -193,12 +201,137 @@ h2 {
     right: 1px;
 }
 
+
+
 /* single column selector */
 .columns-section .column-card .single-column-selection {
     display: none;
+    width: 100%;
+    /* height: 100px; */
+    /* background-color: grey; */
+}
+
+/* add hide class to the column section */
+.hide {
+    visibility: hidden;
+}
+
+/* add expanded class to your specific column card */
+.columns-section .column-card.expanded {
+    /* display: block; */
+    /* opacity: 1; */
+    /* position: absolute; */
+    /* top: 0vh; */
+    /* left: 50%; */
+    z-index: 2;
+    /* min-height: 100vh; */
+    min-width: 60vw;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    margin: 0 auto;
+    /* width: 600px; */
+    /* max-width: 600px; */
+    /* height: 50vh; */
+    height: 100vh;
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* display: flex;
+    flex-direction: column; */
+
+}
+
+/* disable main scrollbar add to body */
+.disable-main-scroll {
+    height: 100%;
+    overflow-y: hidden;
 }
 
 
+.columns-section .column-card.expanded::-webkit-scrollbar {
+    display: none;
+}
+
+.columns-section .column-card.expanded .single-column-selection {
+    display: block;
+}
+
+
+.columns-section .column-card.expanded:hover {
+    cursor: default;
+}
+
+.columns-section .column-card.expanded .img-div {
+    display: none;
+
+}
+
+.columns-section .column-card.expanded .column-stats {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* .columns-section .column-card.expanded .single-column-selection {
+    display: block;
+
+} */
+
+/* ============= */
+
+/* close button */
+.columns-section .column-card .close-button {
+    width: 50px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.columns-section .column-card .close-button:hover {
+    cursor: pointer;
+}
+
+.columns-section .column-card .close-button .lines::before,
+.columns-section .column-card .close-button .lines::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 30px;
+    background-color: white;
+    color: white;
+    position: absolute;
+    top: 20%;
+    left: 49%;
+
+}
+
+.columns-section .column-card .close-button .lines::before {
+    transform: rotate(45deg);
+}
+
+.columns-section .column-card .close-button .lines::after {
+    transform: rotate(135deg);
+}
+
+
+/* single column form */
+.column-card .single-column-selection .volume-selection-section.selector-div,
+.column-card .single-column-selection .bedh-selection-section.selector-div {
+    flex-direction: column;
+}
+
+.column-card .single-column-selection .volume-selection-section.selector-div input[type="number"],
+.column-card .single-column-selection .bedh-selection-section.selector-div input[type="number"] {
+    margin: 0.5rem 0;
+}
 
 /* Media queries */
 
@@ -214,5 +347,10 @@ h2 {
     .mode-selection .selection-section .volume-selection-section.selector-div input[type="number"],
     .mode-selection .selection-section .bedh-selection-section.selector-div input[type="number"] {
         margin: 0.5rem 0;
+    }
+
+    .columns-section .column-card.expanded {
+        left: 0;
+        width: 99vw;
     }
 }

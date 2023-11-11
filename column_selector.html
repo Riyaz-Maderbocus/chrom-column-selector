@@ -58,7 +58,6 @@
         </div>
 
         <div class="columns-section">
-
             <!-- <div class="column-card" id="hiscale_16_20">
                 <div class="column-header">
                     <p class="column-title">HiScale</p>
@@ -68,8 +67,32 @@
                     <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
                 </div>
                 <div class="single-column-selection">
-
+                    <div class="mode-selection">
+                        <h3>Choose which mode you need and input your volume into the box</h3>
+                        <div class="selection-section">
+                            <div class="volume-selection-section selector-div">
+                                <div class="label-input">
+                                    <input type="radio" name="mode" id="single-vol-mode" checked>
+                                    <label for="single-vol-mode">Use resin volume mode (mL)</label>
+                                </div>
+                                <input type="number" name="resin-volume" class="number-input" id="single-resin-volume">
+                            </div>
+                            <div class="bedh-selection-section selector-div">
+                                <div class="label-input">
+                                    <input type="radio" name="mode" id="single-bedh-mode">
+                                    <label for="single-bedh-mode">Use bed height mode (cm)</label>
+                                </div>
+                                <input type="number" name="bed-height" id="single-bedh-height" class="number-input">
+                            </div>
+                            <div class="button-section selector-div">
+                                <button id="single-reset-button" class="mode-button">Reset</button>
+                                <button id="single-calculate-button" class="mode-button">Calculate</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
                 <div class="column-stats">
 
                     <p class="stats-p radius">Radius (mm): <span>50</span></p>
@@ -80,32 +103,24 @@
                     <p class="stats-p calcuated-height">Calculated Height (cm): <span></span></p>
 
                 </div>
-            </div> -->
 
-            <!-- <div class="column-card" id="test">
-                <div class="column-header">
-                    <p class="column-title">HiScale</p>
-                </div>
-
-                <div class="img-div">
-                    <img src="assets/img/hiscale_stock.png" alt="" class="column-img">
-                </div>
-                <div class="column-stats">
-                    <p class="radius">Radius (mm): <span></span></p>
-                    <p class="diameter">Diameter (mm): <span></span></p>
-                    <p class="max-vol">Max Volume (mL): <span></span></p>
-                    <p class="max-height">Max Bed Height (cm): <span></span></p>
+                <div class="close-button">
+                    <div class="lines"></div>
                 </div>
             </div> -->
-
-
-
-
-
-
-
 
         </div>
+
+
+
+
+
+
+
+
+
+
+
 
         <script src="assets/js/column_chooser.js"></script>
     </body>

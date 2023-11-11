@@ -66,10 +66,48 @@ for (let col of all_columns) {
     imgSection.append(newImg);
     newCard.append(imgSection);
 
-    // single column selector
-    let newSingleCol = document.createElement("div");
-    newSingleCol.classList.add("single-column-selection");
-    newCard.append(newSingleCol);
+
+    // single mode selection
+    // -------------------
+
+    // 1single column selector
+    let newSingleColSelection = document.createElement("div");
+    newSingleColSelection.classList.add("single-column-selection");
+
+
+
+    // 2new mode selection div
+    let newModeSelection = document.createElement("div");
+    newModeSelection.classList.add("mode-selection");
+
+    // 3a new heading for mode selection
+    let newHeading = document.createElement("h3");
+    newHeading.innerText = "Choose which mode you need and input your value into the relevant box";
+    // 3a append new heading
+    newModeSelection.append(newHeading);
+
+    // 3b Create newSelection section
+    let newSelectionSection = document.createElement("div");
+    newSelectionSection.classList.add("selection-section");
+
+
+
+    // 3b append new SelectionSection to modeSelectionDiv
+    newModeSelection.append(newSelectionSection);
+
+
+
+
+
+
+    // 2 append new mode seleciton div
+    newSingleColSelection.append(newModeSelection);
+
+    // 1 append single column section to card
+    newCard.append(newSingleColSelection);
+
+
+    // --------------------------
 
     // column stats section
     let colStatsDiv = document.createElement("div");
