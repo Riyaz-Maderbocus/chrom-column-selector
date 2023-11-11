@@ -91,16 +91,124 @@ for (let col of all_columns) {
     newSelectionSection.classList.add("selection-section");
 
 
+    // 4a Create volume selection section pluse selector div
+    let newVolumeSelectionSection = document.createElement("div");
+    newVolumeSelectionSection.classList.add("volume-selection-section", "selector-div");
 
-    // 3b append new SelectionSection to modeSelectionDiv
+
+    // 5a create new volume label input
+    let newVolumeLabelInputDiv = document.createElement("div");
+    newVolumeLabelInputDiv.classList.add("label-input");
+
+    // 6a create volume radio button
+
+    let newVolumeRadioButton = document.createElement("input");
+    newVolumeRadioButton.setAttribute("type", "radio");
+    newVolumeRadioButton.setAttribute("name", "mode");
+
+    newVolumeRadioButton.id = "single-vol-mode";
+
+    // 6a append newVolumeRadioButton to 5a newVolumeLabelInputDiv
+    newVolumeLabelInputDiv.append(newVolumeRadioButton);
+
+    // 6b create new vol label
+    let newVolumeLabel = document.createElement("label");
+    newVolumeLabel.setAttribute("for", "single-vol-mode");
+    newVolumeLabel.innerText = "Use resin volume mode (mL)";
+
+    // 6b append new vollabel to 5a newVolumelabelInputDiv
+    newVolumeLabelInputDiv.append(newVolumeLabel);
+    // 5a append newvolume label input div to 4a newVolumeSelectionSection
+    newVolumeSelectionSection.append(newVolumeLabelInputDiv);
+
+    // 5b create volume input
+    let newVolumeInput = document.createElement("input");
+    newVolumeInput.setAttribute("type", "number");
+    newVolumeInput.setAttribute("name", "resin-volume");
+    newVolumeInput.id = "single-resin-volume";
+    newVolumeInput.classList.add("number-input");
+
+    // 5b append volume input to 4a newVolumeSelectionSection
+    newVolumeSelectionSection.append(newVolumeInput);
+
+    // 4a append newVolumeSelection to 3b newSelectionSection
+    newSelectionSection.append(newVolumeSelectionSection);
+
+    // 4b create new Bed selection section div
+    let newBedhSelectionSection = document.createElement("div");
+    newBedhSelectionSection.classList.add("bedh-selection-section", "selector-div");
+
+    // 5c create new bedh label input div
+    let newBedhLabelInputDiv = document.createElement("div");
+    newBedhLabelInputDiv.classList.add("label-input");
+
+
+
+
+    // 6c create bedh radio button
+    let newBedhRadioButton = document.createElement("input");
+    newBedhRadioButton.setAttribute("type", "radio");
+    newBedhRadioButton.setAttribute("name", "mode");
+    newBedhRadioButton.id = "single-bedh-mode"
+
+    // 6c append bedh radio button to 5c newBedhlabelInputDiv
+    newBedhLabelInputDiv.append(newBedhRadioButton);
+
+    // 6d create bedh label
+    let newBedhLabel = document.createElement("label");
+    newBedhLabel.setAttribute("for", "single-bedh-mode");
+    newBedhLabel.innerText = "Use bed height mode (cm)";
+
+    // 6d append bedh label to 5c newBedhlabelInputDiv
+    newBedhLabelInputDiv.append(newBedhLabel);
+
+
+    // 5c append new bedh label input div to 4b newBedhSelectionSection
+    newBedhSelectionSection.append(newBedhLabelInputDiv);
+
+    // 5d create bedH input
+    let newBedhInput = document.createElement("input");
+    newBedhInput.setAttribute("type", "number");
+    newBedhInput.setAttribute("name", "bed-height");
+    newBedhInput.id = "single-bedh-volume";
+    newBedhInput.classList.add("number-input");
+
+    // 5d append bedh input to 4b newBedhSelectionSection
+    newBedhSelectionSection.append(newBedhInput);
+    // 4b append newbed selection section div to 3b newSelectionSection
+    newSelectionSection.append(newBedhSelectionSection);
+
+    // 4c create button div
+    let newButtonSection = document.createElement("div");
+    newButtonSection.classList.add("button-section", "selector-div");
+
+    // 5e make reset button
+    let newResetButton = document.createElement("button");
+    newResetButton.innerText = "Reset";
+    newResetButton.id = "single-reset-button";
+    newResetButton.classList.add("mode-button");
+
+    // 5e append resest button to 4c button div
+
+    newButtonSection.append(newResetButton);
+
+    // 5f make calc button
+    let newCalcButton = document.createElement("button");
+    newCalcButton.innerText = "Calculate";
+    newCalcButton.id = "single-calculate-button";
+    newCalcButton.classList.add("mode-button");
+
+    // 5f append cacl button to 4c button div
+    newButtonSection.append(newCalcButton);
+
+    // 4c append buttondive to 3b newSelectionSection
+    newSelectionSection.append(newButtonSection);
+
+    // 3b append new SelectionSection to 2 modeSelectionDiv
     newModeSelection.append(newSelectionSection);
 
 
-
-
-
-
-    // 2 append new mode seleciton div
+    // 2 append new mode seleciton div to 1 newSingleColSelectionDiv
     newSingleColSelection.append(newModeSelection);
 
     // 1 append single column section to card
