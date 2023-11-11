@@ -284,8 +284,20 @@ for (let col of all_columns) {
     calcHeightP.append(calcHeightSpan);
     colStatsDiv.append(calcHeightP);
 
-
     newCard.append(colStatsDiv);
+
+    // Close button
+    let closeDiv = document.createElement("div");
+    closeDiv.classList.add("close-button");
+
+    // close button lines
+    let closeLines = document.createElement("div");
+    closeLines.classList.add("lines");
+    closeDiv.append(closeLines);
+
+    newCard.append(closeDiv);
+
+
     // add card to the column section
     columnsSection.append(newCard);
 }
