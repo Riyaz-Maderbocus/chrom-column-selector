@@ -536,6 +536,87 @@ let hardReset = (column) => {
 
 
 }
+
+// making listeners for the cards
+
+const allCards = document.querySelectorAll(".column-card");
+
+// let cardSelectMode = false;
+
+
+// go to expand mode
+for (let card of allCards) {
+
+
+    card.addEventListener("click", (e) => {
+        // cardSelectMode = true;
+        // console.log(e);
+        // console.log(e.target);
+        // console.log(e.target.closest(".column-card"));
+
+        let selectedCard = e.target.closest(".column-card");
+        selectedCard.classList.add("expanded");
+        selectedCard.classList.remove("greyed-out");
+        // console.log(e.target.closest(".column-card").id);
+        let id_key = selectedCard.id;
+
+        let selectedColumn = null;
+        for (let c of all_columns) {
+            if (c.id === id_key) {
+                selectedColumn = c;
+            }
+
+        }
+
+
+        for (let card of allCards) {
+            if (card.id !== id_key)
+                card.classList.add("disable-card");
+        }
+
+        document.body.classList.add("hide", "disable-main-scroll");
+
+
+
+    })
+
+
+}
+
+// go to close mode
+
+const allCloseButtons = document.querySelectorAll(".close-button");
+let findIdcard = null
+
+
+for (let closebutton of allCloseButtons) {
+
+    closebutton.addEventListener("click", (e) => {
+            alert("I got clicked");
+
+            console.log(e.target);
+            let closeSelectedCard = e.target.closest(".column-card");
+            // findIdcard = closeSelectedCard.id
+            // console.log(closeSelectedCard.id);
+            // console.log(closeSelectedCard.classList);
+            closeSelectedCard.classList.remove("expanded");
+
+
+            for (let card of allCards) {
+                card.classList.remove("expanded");
+                card.classList.remove("disable-card");
+            }
+
+            document.body.classList.remove("hide", "disable-main-scroll");
+            e.stopPropagation()
+        }
+
+    )
+
+}
+
+
+
 // utilities
 
 // Use to get the id of the sub element clicked
