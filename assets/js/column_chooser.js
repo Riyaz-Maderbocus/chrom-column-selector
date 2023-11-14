@@ -106,14 +106,14 @@ for (let col of all_columns) {
     newVolumeRadioButton.setAttribute("type", "radio");
     newVolumeRadioButton.setAttribute("name", "mode");
 
-    newVolumeRadioButton.id = "single-vol-mode";
+    newVolumeRadioButton.id = `${col.id}-single-vol-mode`;
 
     // 6a append newVolumeRadioButton to 5a newVolumeLabelInputDiv
     newVolumeLabelInputDiv.append(newVolumeRadioButton);
 
     // 6b create new vol label
     let newVolumeLabel = document.createElement("label");
-    newVolumeLabel.setAttribute("for", "single-vol-mode");
+    newVolumeLabel.setAttribute("for", `${col.id}-single-vol-mode`);
     newVolumeLabel.innerText = "Use resin volume mode (mL)";
 
     // 6b append new vollabel to 5a newVolumelabelInputDiv
@@ -125,7 +125,7 @@ for (let col of all_columns) {
     let newVolumeInput = document.createElement("input");
     newVolumeInput.setAttribute("type", "number");
     newVolumeInput.setAttribute("name", "resin-volume");
-    newVolumeInput.id = "single-resin-volume";
+    newVolumeInput.id = `${col.id}-single-resin-volume`;
     newVolumeInput.classList.add("number-input");
 
     // 5b append volume input to 4a newVolumeSelectionSection
@@ -149,14 +149,14 @@ for (let col of all_columns) {
     let newBedhRadioButton = document.createElement("input");
     newBedhRadioButton.setAttribute("type", "radio");
     newBedhRadioButton.setAttribute("name", "mode");
-    newBedhRadioButton.id = "single-bedh-mode"
+    newBedhRadioButton.id = `${col.id}-single-bedh-mode`
 
     // 6c append bedh radio button to 5c newBedhlabelInputDiv
     newBedhLabelInputDiv.append(newBedhRadioButton);
 
     // 6d create bedh label
     let newBedhLabel = document.createElement("label");
-    newBedhLabel.setAttribute("for", "single-bedh-mode");
+    newBedhLabel.setAttribute("for", `${col.id}-single-bedh-mode`);
     newBedhLabel.innerText = "Use bed height mode (cm)";
 
     // 6d append bedh label to 5c newBedhlabelInputDiv
@@ -170,7 +170,7 @@ for (let col of all_columns) {
     let newBedhInput = document.createElement("input");
     newBedhInput.setAttribute("type", "number");
     newBedhInput.setAttribute("name", "bed-height");
-    newBedhInput.id = "single-bedh-volume";
+    newBedhInput.id = `${col.id}-single-bedh-volume`;
     newBedhInput.classList.add("number-input");
 
     // 5d append bedh input to 4b newBedhSelectionSection
@@ -600,7 +600,7 @@ let findIdcard = null
 for (let closebutton of allCloseButtons) {
 
     closebutton.addEventListener("click", (e) => {
-            alert("I got clicked");
+            // alert("I got clicked");
 
             console.log(e.target);
             let closeSelectedCard = e.target.closest(".column-card");
@@ -639,24 +639,22 @@ let volRadio = document.querySelector(".single-column-selection #single-vol-mode
 const allSingleVolRadioButtons = document.querySelectorAll("#single-vol-mode");
 
 // let singleVolRadioButton = document.querySelector("")
-for (let label of singleLabels) {
-    label.addEventListener("click", (e) => {
-        // e.preventDefault();
-        console.log(e)
-        // e.stopPropagation();
+// for (let label of singleLabels) {
+//     label.addEventListener("click", (e) => {
+
+//         console.log(e)
 
 
-        // alert("clicked label");
-        if (e.target.htmlFor === "single-vol-mode") {
-            alert("I am for single vol mode");
-            for (let volRad of allSingleVolRadioButtons) {
-                volRad.checked = true;
-            }
-        }
+//         if (e.target.htmlFor === "single-vol-mode") {
+//             alert("I am for single vol mode");
+//             for (let volRad of allSingleVolRadioButtons) {
+//                 volRad.checked = true;
+//             }
+//         }
 
-    })
+//     })
 
-}
+// }
 
 for (let radio of singleRadioButtons) {
     radio.addEventListener("change", (e) => {
@@ -664,13 +662,118 @@ for (let radio of singleRadioButtons) {
         e.stopPropagation()
     })
 }
+
+
+// single check mode
+let singleCheckMode = (colId) => {
+    let volRadioButton = document.querySelector(`#${colId}-single-vol-mode`);
+    let bedRadioButton = document.querySelector(`#${colId}-single-vol-mode`);
+    if (volRadioButton.checked) {
+        return "volMode"
+    } else if (bedRadioButton.checked) {
+        return "heightMode"
+    }
+}
+
+
+// calculation example ----------------------
+
+// calcButton.addEventListener("click", () => {
+
+//     let userVol = parseFloat(volInput.value);
+//     let userHeight = parseFloat(heightInput.value);
+
+//     if (checkMode() === "volMode") {
+
+//         if (userVol === NaN || !userVol) {
+//             alert("Please enter a value in resin volume field");
+//         } else {
+//             for (let col of all_columns) {
+
+
+//                 let newArea = getArea(col);
+
+
+//                 resetFormatting(col);
+//                 calcHeight(userVol, newArea, col);
+//                 colorText(col);
+//                 hasCalculatedAlready = true;
+//             }
+//         }
+//     } else {
+
+//         if (userHeight === NaN || !userHeight) {
+//             alert("Please enter a value in the bed height field")
+//         } else {
+//             for (let col of all_columns) {
+
+//                 let newArea = getArea(col);
+//                 resetFormatting(col);
+//                 calcVol(userHeight, newArea, col);
+//                 colorText(col);
+//                 hasCalculatedAlready = true;
+//             }
+//         }
+//     }
+
+// })
+
+// ========================================
 // all single calculate buttons
 
 const singleCalcButtons = document.querySelectorAll(".single-calculate-button");
 
 for (let button of singleCalcButtons) {
-    button.addEventListener("click", () => {
-        alert("single c got clicked")
+
+
+    button.addEventListener("click", (e) => {
+
+        // get the column id
+        let selectedCard = e.target.closest(".column-card");
+
+        console.log(selectedCard);
+        let selectedId = selectedCard.id;
+        let selectedColumn = null;
+        for (let col of all_columns) {
+            if (col.id === selectedId) {
+                selectedColumn = col
+            }
+        }
+
+        // get the numbers from the input boxes
+        let singleVolInputBox = document.querySelector(`#${selectedColumn.id}-single-resin-volume`);
+        let singleBedInputBox = document.querySelector(`#${selectedColumn.id}-single-bedh-volume`);
+        let userSingleVolInput = parseFloat(singleVolInputBox.value);
+        let userSingleBedInput = parseFloat(singleBedInputBox.value);
+
+        if (singleCheckMode(selectedColumn.id) === "volMode") {
+            if (userSingleVolInput === NaN || !userSingleVolInput) {
+                alert("Please enter a value in resin volume field");
+            } else {
+                let newArea = getArea(selectedColumn);
+                resetFormatting(selectedColumn);
+                calcHeight(userSingleVolInput, newArea, selectedColumn);
+                colorText(selectedColumn);
+
+                //     hasCalculatedAlready = true;
+                // }
+            }
+        } else {
+            // alert("height mode")
+            if (userSingleBedInput === NaN || !userSingleBedInput) {
+                alert("Please enter a value in the bed height field")
+            } else {
+                let newArea = getArea(selectedColumn);
+                resetFormatting(selectedColumn);
+                calcVol(userSingleBedInput, newArea, selectedColumn);
+                colorText(selectedColumn);
+                // hasCalculatedAlready = true;
+
+
+            }
+            alert("single c got clicked");
+
+        }
     })
 }
 
