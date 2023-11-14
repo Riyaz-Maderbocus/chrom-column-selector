@@ -186,7 +186,7 @@ for (let col of all_columns) {
     let newResetButton = document.createElement("button");
     newResetButton.innerText = "Reset";
     newResetButton.id = "single-reset-button";
-    newResetButton.classList.add("mode-button");
+    newResetButton.classList.add("mode-button", "single-reset-button");
 
     // 5e append resest button to 4c button div
 
@@ -196,7 +196,7 @@ for (let col of all_columns) {
     let newCalcButton = document.createElement("button");
     newCalcButton.innerText = "Calculate";
     newCalcButton.id = "single-calculate-button";
-    newCalcButton.classList.add("mode-button");
+    newCalcButton.classList.add("mode-button", "single-calculate-button");
 
     // 5f append cacl button to 4c button div
     newButtonSection.append(newCalcButton);
@@ -322,6 +322,9 @@ const resetButton = document.querySelector("#reset-button");
 
 // Settings
 let hasCalculatedAlready = false;
+
+// column Selection area
+const columnSelect = document.querySelector(".columns-section");
 
 
 // This works currently
@@ -454,6 +457,8 @@ let calcHeight = (volResin, area, column) => {
     // return volResin / area
 }
 
+
+
 // Work out volume from height input
 
 let calcVol = (height, area, column) => {
@@ -574,6 +579,8 @@ for (let card of allCards) {
                 card.classList.add("disable-card");
         }
 
+
+        selectedCard.classList.remove("disable-card");
         document.body.classList.add("hide", "disable-main-scroll");
 
 
@@ -587,6 +594,7 @@ for (let card of allCards) {
 
 const allCloseButtons = document.querySelectorAll(".close-button");
 let findIdcard = null
+
 
 
 for (let closebutton of allCloseButtons) {
@@ -615,6 +623,56 @@ for (let closebutton of allCloseButtons) {
 
 }
 
+
+// const singleSectionCards = document.querySelectorAll(".single-column-selection .mode-selection");
+// for (let card of singleSectionCards) {
+//     card.addEventListener("click", (e) => {
+//         card.stopPropagation(e)
+//     })
+// }
+
+// single labels for radio button
+
+const singleLabels = document.querySelectorAll(".single-column-selection label");
+const singleRadioButtons = document.querySelectorAll(".single-column-selection input[type='radio']");
+let volRadio = document.querySelector(".single-column-selection #single-vol-mode");
+const allSingleVolRadioButtons = document.querySelectorAll("#single-vol-mode");
+
+// let singleVolRadioButton = document.querySelector("")
+for (let label of singleLabels) {
+    label.addEventListener("click", (e) => {
+        // e.preventDefault();
+        console.log(e)
+        // e.stopPropagation();
+
+
+        // alert("clicked label");
+        if (e.target.htmlFor === "single-vol-mode") {
+            alert("I am for single vol mode");
+            for (let volRad of allSingleVolRadioButtons) {
+                volRad.checked = true;
+            }
+        }
+
+    })
+
+}
+
+for (let radio of singleRadioButtons) {
+    radio.addEventListener("change", (e) => {
+
+        e.stopPropagation()
+    })
+}
+// all single calculate buttons
+
+const singleCalcButtons = document.querySelectorAll(".single-calculate-button");
+
+for (let button of singleCalcButtons) {
+    button.addEventListener("click", () => {
+        alert("single c got clicked")
+    })
+}
 
 
 // utilities

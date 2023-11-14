@@ -223,7 +223,7 @@ h2 {
     /* position: absolute; */
     /* top: 0vh; */
     /* left: 50%; */
-    z-index: 2;
+    z-index: 5;
     /* min-height: 100vh; */
     min-width: 60vw;
     overflow-y: scroll;
@@ -257,7 +257,9 @@ h2 {
 /* disable class for rest of cards when selected */
 .disable-card {
     pointer-events: none;
+    /* display: none; */
 }
+
 
 .columns-section .column-card.expanded::-webkit-scrollbar {
     display: none;
