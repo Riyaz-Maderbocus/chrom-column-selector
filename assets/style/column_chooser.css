@@ -247,6 +247,11 @@ h2 {
 
 }
 
+/* space out single radio button */
+.column-card.expanded .single-radio-button {
+    margin-right: 20px;
+}
+
 /* disable main scrollbar add to body */
 .disable-main-scroll {
     height: 100%;
@@ -340,6 +345,18 @@ h2 {
     margin: 0.5rem 0;
 }
 
+
+/* label divs */
+.column-card .single-column-selection .selection-section .label-input {
+    width: 80%;
+    max-width: 600px;
+    /* text-align: center; */
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+
+
 /* Media queries */
 
 
@@ -356,8 +373,20 @@ h2 {
         margin: 0.5rem 0;
     }
 
+
+}
+
+@media only screen and (max-width: 600px) {
     .columns-section .column-card.expanded {
-        left: 0;
-        width: 99vw;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        min-width: 90vw;
+    }
+
+    .column-card .single-column-selection .selection-section .label-input {
+        width: 90%;
+        /* max-width: 600px; */
     }
 }

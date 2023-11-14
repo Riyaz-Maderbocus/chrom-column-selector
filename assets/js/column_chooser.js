@@ -105,7 +105,7 @@ for (let col of all_columns) {
     let newVolumeRadioButton = document.createElement("input");
     newVolumeRadioButton.setAttribute("type", "radio");
     newVolumeRadioButton.setAttribute("name", "mode");
-
+    newVolumeRadioButton.classList.add("single-radio-button");
     newVolumeRadioButton.id = `${col.id}-single-vol-mode`;
 
     // 6a append newVolumeRadioButton to 5a newVolumeLabelInputDiv
@@ -150,6 +150,7 @@ for (let col of all_columns) {
     newBedhRadioButton.setAttribute("type", "radio");
     newBedhRadioButton.setAttribute("name", "mode");
     newBedhRadioButton.id = `${col.id}-single-bedh-mode`
+    newBedhRadioButton.classList.add("single-radio-button");
 
     // 6c append bedh radio button to 5c newBedhlabelInputDiv
     newBedhLabelInputDiv.append(newBedhRadioButton);
@@ -170,6 +171,7 @@ for (let col of all_columns) {
     let newBedhInput = document.createElement("input");
     newBedhInput.setAttribute("type", "number");
     newBedhInput.setAttribute("name", "bed-height");
+    newBedhInput.setAttribute("step", "0.1");
     newBedhInput.id = `${col.id}-single-bedh-volume`;
     newBedhInput.classList.add("number-input");
 
@@ -321,7 +323,7 @@ const calcButton = document.querySelector("#calculate-button");
 const resetButton = document.querySelector("#reset-button");
 
 // Settings
-let hasCalculatedAlready = false;
+// let hasCalculatedAlready = false;
 
 // column Selection area
 const columnSelect = document.querySelector(".columns-section");
@@ -364,7 +366,9 @@ calcButton.addEventListener("click", () => {
     let userVol = parseFloat(volInput.value);
     let userHeight = parseFloat(heightInput.value);
 
-    if (checkMode() === "volMode") {
+    if (!volMode.checked && !heightMode.checked) {
+        alert("Please choose your mode and put your value into the appropriate field")
+    } else if (checkMode() === "volMode") {
         // alert("volmode")
         if (userVol === NaN || !userVol) {
             alert("Please enter a value in resin volume field");
@@ -384,7 +388,7 @@ calcButton.addEventListener("click", () => {
                 resetFormatting(col);
                 calcHeight(userVol, newArea, col);
                 colorText(col);
-                hasCalculatedAlready = true;
+                // hasCalculatedAlready = true;
             }
         }
     } else {
@@ -398,31 +402,48 @@ calcButton.addEventListener("click", () => {
                 resetFormatting(col);
                 calcVol(userHeight, newArea, col);
                 colorText(col);
-                hasCalculatedAlready = true;
+                // hasCalculatedAlready = true;
             }
         }
     }
 
 })
 
-resetButton.addEventListener("click", () => {
-    if (hasCalculatedAlready === true) {
-        for (let col of all_columns) {
-            resetFormatting(col);
-            hardReset(col);
-        }
-        // reset gui
-        volMode.checked = true;
-        volInput.value = "";
-        heightInput.value = "";
-        hasCalculatedAlready = false;
-    } else {
-        volMode.checked = true;
-        volInput.value = "";
-        heightInput.value = "";
-        hasCalculatedAlready = false;
-    }
+// making listeners for the cards
 
+const allCards = document.querySelectorAll(".column-card");
+
+resetButton.addEventListener("click", () => {
+    // if (hasCalculatedAlready === true) {
+    //     for (let col of all_columns) {
+    //         resetFormatting(col);
+    //         hardReset(col);
+    //     }
+    //     // reset gui
+    //     volMode.checked = true;
+    //     volInput.value = "";
+    //     heightInput.value = "";
+    //     hasCalculatedAlready = false;
+    // } else {
+    //     volMode.checked = true;
+    //     volInput.value = "";
+    //     heightInput.value = "";
+    //     hasCalculatedAlready = false;
+    // }
+
+    for (let col of all_columns) {
+        resetFormatting(col);
+        hardReset(col);
+    }
+    // reset gui
+    volMode.checked = true;
+    volInput.value = "";
+    heightInput.value = "";
+    // hasCalculatedAlready = false;
+
+    // for (let card of allCards) {
+    //     card.classList.remove("greyed-out")
+    // }
     // if (hasCalculatedAlready == true) {
     //     alert("clicked and it set to true")
     // }
@@ -518,8 +539,11 @@ let resetFormatting = (column) => {
     let card = document.querySelector(`#${column.id}`);
 
     card.classList.remove("greyed-out");
+
     heightSpan.classList.remove("red-text", "green-text");
     volSpan.classList.remove("red-text", "green-text");
+
+
 }
 
 
@@ -533,8 +557,8 @@ let hardReset = (column) => {
     // delete spans
     let heightSpan = document.querySelector(`#${column.id} .calculated-height span`);
     let volSpan = document.querySelector(`#${column.id} .calculated-volume span`);
-    heightSpan.remove();
-    volSpan.remove();
+    heightSpan.innerText = "";
+    volSpan.innerText = "";
 
 
 
@@ -542,9 +566,7 @@ let hardReset = (column) => {
 
 }
 
-// making listeners for the cards
 
-const allCards = document.querySelectorAll(".column-card");
 
 // let cardSelectMode = false;
 
@@ -572,6 +594,7 @@ for (let card of allCards) {
             }
 
         }
+
 
 
         for (let card of allCards) {
@@ -602,12 +625,28 @@ for (let closebutton of allCloseButtons) {
     closebutton.addEventListener("click", (e) => {
             // alert("I got clicked");
 
-            console.log(e.target);
+            // console.log(e.target);
             let closeSelectedCard = e.target.closest(".column-card");
+            let selectedColumn = null;
+
+            for (col of all_columns) {
+                if (closeSelectedCard.id === col.id) {
+                    selectedColumn = col
+                }
+            }
             // findIdcard = closeSelectedCard.id
             // console.log(closeSelectedCard.id);
             // console.log(closeSelectedCard.classList);
             closeSelectedCard.classList.remove("expanded");
+
+            // card closing grey out
+            let heightSpan = document.querySelector(`#${selectedColumn.id} .calculated-height span`);
+            let volSpan = document.querySelector(`#${selectedColumn.id} .calculated-volume span`);
+
+            if (volSpan.classList.contains("red-text") || heightSpan.classList.contains("red-text")) {
+                closeSelectedCard.classList.add("greyed-out");
+            }
+
 
 
             for (let card of allCards) {
@@ -624,37 +663,10 @@ for (let closebutton of allCloseButtons) {
 }
 
 
-// const singleSectionCards = document.querySelectorAll(".single-column-selection .mode-selection");
-// for (let card of singleSectionCards) {
-//     card.addEventListener("click", (e) => {
-//         card.stopPropagation(e)
-//     })
-// }
 
 // single labels for radio button
 
-const singleLabels = document.querySelectorAll(".single-column-selection label");
 const singleRadioButtons = document.querySelectorAll(".single-column-selection input[type='radio']");
-let volRadio = document.querySelector(".single-column-selection #single-vol-mode");
-const allSingleVolRadioButtons = document.querySelectorAll("#single-vol-mode");
-
-// let singleVolRadioButton = document.querySelector("")
-// for (let label of singleLabels) {
-//     label.addEventListener("click", (e) => {
-
-//         console.log(e)
-
-
-//         if (e.target.htmlFor === "single-vol-mode") {
-//             alert("I am for single vol mode");
-//             for (let volRad of allSingleVolRadioButtons) {
-//                 volRad.checked = true;
-//             }
-//         }
-
-//     })
-
-// }
 
 for (let radio of singleRadioButtons) {
     radio.addEventListener("change", (e) => {
@@ -676,49 +688,6 @@ let singleCheckMode = (colId) => {
 }
 
 
-// calculation example ----------------------
-
-// calcButton.addEventListener("click", () => {
-
-//     let userVol = parseFloat(volInput.value);
-//     let userHeight = parseFloat(heightInput.value);
-
-//     if (checkMode() === "volMode") {
-
-//         if (userVol === NaN || !userVol) {
-//             alert("Please enter a value in resin volume field");
-//         } else {
-//             for (let col of all_columns) {
-
-
-//                 let newArea = getArea(col);
-
-
-//                 resetFormatting(col);
-//                 calcHeight(userVol, newArea, col);
-//                 colorText(col);
-//                 hasCalculatedAlready = true;
-//             }
-//         }
-//     } else {
-
-//         if (userHeight === NaN || !userHeight) {
-//             alert("Please enter a value in the bed height field")
-//         } else {
-//             for (let col of all_columns) {
-
-//                 let newArea = getArea(col);
-//                 resetFormatting(col);
-//                 calcVol(userHeight, newArea, col);
-//                 colorText(col);
-//                 hasCalculatedAlready = true;
-//             }
-//         }
-//     }
-
-// })
-
-// ========================================
 // all single calculate buttons
 
 const singleCalcButtons = document.querySelectorAll(".single-calculate-button");
@@ -731,7 +700,7 @@ for (let button of singleCalcButtons) {
         // get the column id
         let selectedCard = e.target.closest(".column-card");
 
-        console.log(selectedCard);
+        // console.log(selectedCard);
         let selectedId = selectedCard.id;
         let selectedColumn = null;
         for (let col of all_columns) {
@@ -746,7 +715,15 @@ for (let button of singleCalcButtons) {
         let userSingleVolInput = parseFloat(singleVolInputBox.value);
         let userSingleBedInput = parseFloat(singleBedInputBox.value);
 
-        if (singleCheckMode(selectedColumn.id) === "volMode") {
+        // adding radio check statemtent
+        let singleVolRadioButton = document.querySelector(`#${selectedColumn.id}-single-vol-mode`);
+        let singleBedRadioButton = document.querySelector(`#${selectedColumn.id}-single-bedh-mode`);
+        // console.log(singleVolRadioButton)
+        // console.log(singleBedRadioButton)
+
+        if (!singleVolRadioButton.checked && !singleBedRadioButton.checked) {
+            alert("Please choose a mode and enter a value into the number box")
+        } else if (singleCheckMode(selectedColumn.id) === "volMode") {
             if (userSingleVolInput === NaN || !userSingleVolInput) {
                 alert("Please enter a value in resin volume field");
             } else {
@@ -755,8 +732,8 @@ for (let button of singleCalcButtons) {
                 calcHeight(userSingleVolInput, newArea, selectedColumn);
                 colorText(selectedColumn);
 
-                //     hasCalculatedAlready = true;
-                // }
+                // hasCalculatedAlready = true;
+
             }
         } else {
             // alert("height mode")
@@ -771,30 +748,35 @@ for (let button of singleCalcButtons) {
 
 
             }
-            alert("single c got clicked");
+            // alert("single c got clicked");
 
         }
     })
 }
 
+// all single reset buttons
+const singleResetButtons = document.querySelectorAll(".single-reset-button");
 
-// utilities
+// reset eventlistener for single reset buttons
+for (let button of singleResetButtons) {
+    button.addEventListener("click", (e) => {
+        let selectedCard = e.target.closest(".column-card");
 
-// Use to get the id of the sub element clicked
-// test.addEventListener("click", (e) => {
-//     console.log(this);
-//     console.log(e.srcElement);
-//     console.log(e.srcElement.parentElement.id);
-//     console.log(e.parentElement.id);
-//     console.log(e.target.parentElement.id);
+        // console.log(selectedCard);
+        let selectedId = selectedCard.id;
+        let selectedColumn = null;
+        for (let col of all_columns) {
+            if (col.id === selectedId) {
+                selectedColumn = col
+            }
+        }
 
-// })
-
-
-//  Use this to change the inner text of the spans
-// hiScale_16_20.card.querySelector(".diameter span").innerText = hiScale_16_20.diameter;
-
-// Click listener for one card
-// hiScale_16_20.card.addEventListener("click", () => {
-//     alert("I got clicked first card")
-// })
+        let singleVolInputBox = document.querySelector(`#${selectedColumn.id}-single-resin-volume`);
+        let singleBedInputBox = document.querySelector(`#${selectedColumn.id}-single-bedh-volume`);
+        singleVolInputBox.value = "";
+        singleBedInputBox.value = "";
+        resetFormatting(selectedColumn);
+        hardReset(selectedColumn);
+        // hasCalculatedAlready = false;
+    })
+}
