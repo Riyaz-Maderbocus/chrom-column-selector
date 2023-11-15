@@ -24,12 +24,7 @@
                 <li>Unsuitable columns will be grayed out, but can still be accessed</li>
                 <li>Click on a column image to open it up and get a tool to fine tune your parameters</li>
             </ul>
-            <!-- <p>In the selection box below, tick one of the boxes for volume or bed height modes</p>
-            <p>In volume mode, the tool will take your volume of resin and work out the bed height for all the columns
-            </p>
-            <p>In bed height mode, the tool will work out the volume of resin for each column</p>
-            <p>Unsuitable columns will be grayed out</p>
-            <p>Click on a column image to open it up and get a tool to fine tune your parameters</p> -->
+
         </div>
 
 
@@ -48,7 +43,7 @@
                         <input type="radio" name="mode" id="bedh-mode">
                         <label for="bedh-mode">Use bed height mode (cm)</label>
                     </div>
-                    <input type="number" name="bed-height" id="bedh-height" class="number-input">
+                    <input type="number" name="bed-height" id="bedh-height" class="number-input" step="0.1">
                 </div>
                 <div class="button-section selector-div">
                     <button id="reset-button" class="mode-button">Reset</button>
